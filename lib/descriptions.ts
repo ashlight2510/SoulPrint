@@ -102,7 +102,7 @@ function generateProfileExplanation(profile: Profile): string {
   const [line1, line2] = profile.split("/").map(Number);
   
   const lineDescriptions: Record<number, string> = {
-    1: "연구자: 깊이 있는 탐구와 근본적인 이해를 추구합니다.",
+    1: "연구자: 깊이 있는 탐구와 근본적인 이해를 추구합니다.", 
     2: "은둔자: 고유한 재능을 가지고 있으나 때를 기다립니다.",
     3: "순환자: 시행착오를 통해 배우고 성장합니다.",
     4: "기회주의자: 네트워크와 연결을 통해 기회를 만듭니다.",
