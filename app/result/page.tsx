@@ -1,14 +1,14 @@
 "use client"
 
+import { Suspense, useEffect, useState } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
 import { calculate, CalculationResult } from "@/lib/calculator"
 import { generateDescriptions, Descriptions } from "@/lib/descriptions"
 import { ResultCard } from "@/components/ResultCard"
 import { Button } from "@/components/ui/button"
 import { Share2, ArrowLeft } from "lucide-react"
 
-export default function ResultPage() {
+function ResultContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const [result, setResult] = useState<CalculationResult | null>(null)
@@ -144,5 +144,19 @@ export default function ResultPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ResultPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          <p className="text-muted-foreground">결과를 불러오는 중...</p>
+        </div>
+      }
+    >
+      <ResultContent />
+    </Suspense>
   )
 }
