@@ -28,7 +28,6 @@ npm run dev
   globals.css           # 전역 스타일
 /components
   DateInput.tsx         # 날짜/시간 입력 컴포넌트
-  LocationInput.tsx     # 장소 입력 컴포넌트
   ResultCard.tsx        # 결과 카드 컴포넌트
   /ui                   # ShadCN UI 컴포넌트
 /lib

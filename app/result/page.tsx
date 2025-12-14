@@ -17,15 +17,14 @@ function ResultContent() {
   useEffect(() => {
     const date = searchParams.get("date")
     const time = searchParams.get("time")
-    const place = searchParams.get("place")
 
-    if (!date || !time || !place) {
+    if (!date || !time) {
       router.push("/")
       return
     }
 
     try {
-      const calcResult = calculate(date, time, decodeURIComponent(place))
+      const calcResult = calculate(date, time)
       const desc = generateDescriptions(
         calcResult.type,
         calcResult.strategy,

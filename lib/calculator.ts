@@ -115,8 +115,7 @@ export function calculateProfile(
  */
 export function calculate(
   birthDate: string,
-  birthTime: string,
-  birthPlace: string
+  birthTime: string
 ): CalculationResult {
   const date = new Date(`${birthDate}T${birthTime}`);
   const year = date.getFullYear();

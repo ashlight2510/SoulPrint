@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { DateInput } from "@/components/DateInput"
-import { LocationInput } from "@/components/LocationInput"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
@@ -11,7 +10,6 @@ export default function Home() {
   const router = useRouter()
   const [birthDate, setBirthDate] = useState("")
   const [birthTime, setBirthTime] = useState("")
-  const [birthPlace, setBirthPlace] = useState("")
 
   const handleBirthDateChange = (value: string) => {
     const digits = value.replace(/\D/g, "").slice(0, 8)
@@ -34,7 +32,7 @@ export default function Home() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     
-    if (!birthDate || !birthTime || !birthPlace) {
+    if (!birthDate || !birthTime) {
       alert("모든 정보를 입력해주세요.")
       return
     }
@@ -43,7 +41,6 @@ export default function Home() {
     const params = new URLSearchParams({
       date: birthDate,
       time: birthTime,
-      place: encodeURIComponent(birthPlace),
     })
 
     const dateValid = /^\d{4}-\d{2}-\d{2}$/.test(birthDate)
@@ -101,12 +98,6 @@ export default function Home() {
                 placeholder="예: 08:30"
                 inputMode="numeric"
               />
-              
-              <LocationInput
-                value={birthPlace}
-                onChange={setBirthPlace}
-              />
-
               <Button type="submit" className="w-full" size="lg">
                 결과 보기
               </Button>
