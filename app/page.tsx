@@ -13,6 +13,24 @@ export default function Home() {
   const [birthTime, setBirthTime] = useState("")
   const [birthPlace, setBirthPlace] = useState("")
 
+  const handleBirthDateChange = (value: string) => {
+    const digits = value.replace(/\D/g, "").slice(0, 8)
+
+    if (digits.length <= 4) {
+      setBirthDate(digits)
+      return
+    }
+
+    if (digits.length <= 6) {
+      setBirthDate(`${digits.slice(0, 4)}-${digits.slice(4)}`)
+      return
+    }
+
+    setBirthDate(
+      `${digits.slice(0, 4)}-${digits.slice(4, 6)}-${digits.slice(6, 8)}`
+    )
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     
@@ -27,6 +45,19 @@ export default function Home() {
       time: birthTime,
       place: encodeURIComponent(birthPlace),
     })
+
+    const dateValid = /^\d{4}-\d{2}-\d{2}$/.test(birthDate)
+    const timeValid = /^\d{2}:\d{2}$/.test(birthTime)
+
+    if (!dateValid) {
+      alert("생년월일을 YYYY-MM-DD 형식으로 입력해주세요.")
+      return
+    }
+
+    if (!timeValid) {
+      alert("출생 시간을 HH:MM 형식으로 입력해주세요.")
+      return
+    }
 
     router.push(`/result?${params.toString()}`)
   }
@@ -55,8 +86,11 @@ export default function Home() {
               <DateInput
                 label="생년월일"
                 value={birthDate}
-                onChange={setBirthDate}
-                type="date"
+                onChange={handleBirthDateChange}
+                type="text"
+                placeholder="예: 1990-07-15"
+                inputMode="numeric"
+                hint="연도 4자리-월 2자리-일 2자리 형식으로 입력하세요."
               />
               
               <DateInput
@@ -64,6 +98,8 @@ export default function Home() {
                 value={birthTime}
                 onChange={setBirthTime}
                 type="time"
+                placeholder="예: 08:30"
+                inputMode="numeric"
               />
               
               <LocationInput
@@ -87,4 +123,3 @@ export default function Home() {
     </div>
   )
 }
-

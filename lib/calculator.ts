@@ -4,19 +4,19 @@
  */
 
 export type Type = 
-  | "Projector" 
-  | "Generator" 
-  | "Manifesting Generator" 
-  | "Manifestor" 
-  | "Reflector";
+  | "조율가" 
+  | "반응가" 
+  | "멀티 실행가" 
+  | "시작가" 
+  | "관찰가";
 
 export type Authority = 
-  | "Emotional" 
-  | "Splenic" 
-  | "Ego" 
-  | "Sacral" 
-  | "Self-Projected" 
-  | "Mental";
+  | "감정 흐름형" 
+  | "직감형" 
+  | "의지 주도형" 
+  | "몸 반응형" 
+  | "말하면서 명료해지는 형" 
+  | "사색형";
 
 export type Profile = `${number}/${number}`;
 
@@ -42,17 +42,17 @@ export function calculateType(
   
   switch (mod) {
     case 0:
-      return "Projector";
+      return "조율가";
     case 1:
-      return "Generator";
+      return "반응가";
     case 2:
-      return "Manifesting Generator";
+      return "멀티 실행가";
     case 3:
-      return "Manifestor";
+      return "시작가";
     case 4:
-      return "Reflector";
+      return "관찰가";
     default:
-      return "Generator";
+      return "반응가";
   }
 }
 
@@ -61,11 +61,11 @@ export function calculateType(
  */
 export function getStrategy(type: Type): string {
   const strategyMap: Record<Type, string> = {
-    Projector: "Wait to be recognized",
-    Generator: "Respond to what comes",
-    "Manifesting Generator": "Respond then act quickly",
-    Manifestor: "Inform and initiate",
-    Reflector: "Observe and take time",
+    조율가: "인정받을 때까지 기다리기",
+    반응가: "다가오는 것에 반응하기",
+    "멀티 실행가": "반응한 뒤 재빠르게 행동하기",
+    시작가: "알리고 시작하기",
+    관찰가: "충분히 관찰하고 결정하기",
   };
   
   return strategyMap[type];
@@ -79,19 +79,19 @@ export function calculateAuthority(hour: number): Authority {
   
   switch (mod) {
     case 0:
-      return "Emotional";
+      return "감정 흐름형";
     case 1:
-      return "Splenic";
+      return "직감형";
     case 2:
-      return "Ego";
+      return "의지 주도형";
     case 3:
-      return "Sacral";
+      return "몸 반응형";
     case 4:
-      return "Self-Projected";
+      return "말하면서 명료해지는 형";
     case 5:
-      return "Mental";
+      return "사색형";
     default:
-      return "Emotional";
+      return "감정 흐름형";
   }
 }
 
@@ -136,4 +136,3 @@ export function calculate(
     profile,
   };
 }
-

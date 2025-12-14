@@ -5,7 +5,6 @@ import { useEffect, useState } from "react"
 import { calculate, CalculationResult } from "@/lib/calculator"
 import { generateDescriptions, Descriptions } from "@/lib/descriptions"
 import { ResultCard } from "@/components/ResultCard"
-import { BodyGraph } from "@/components/BodyGraph"
 import { Button } from "@/components/ui/button"
 import { Share2, ArrowLeft } from "lucide-react"
 
@@ -49,7 +48,7 @@ export default function ResultPage() {
       try {
         await navigator.share({
           title: "SoulPrint - 성향 분석 결과",
-          text: `나의 Type: ${result?.type}, Profile: ${result?.profile}`,
+          text: `나의 유형: ${result?.type}, 성향 조합: ${result?.profile}`,
           url: url,
         })
       } catch (error) {
@@ -106,31 +105,22 @@ export default function ResultPage() {
           </h1>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-8">
-          <div>
-            <BodyGraph
-              birthDate={searchParams.get("date") || ""}
-              birthTime={searchParams.get("time") || ""}
-            />
+        <div className="grid md:grid-cols-3 gap-4 mb-8">
+          <div className="bg-white rounded-lg border p-6">
+            <h3 className="text-2xl font-bold mb-2">{result.type}</h3>
+            <p className="text-muted-foreground text-sm">
+              성향 조합: {result.profile}
+            </p>
           </div>
           
-          <div className="space-y-4">
-            <div className="bg-white rounded-lg border p-6">
-              <h3 className="text-2xl font-bold mb-2">{result.type}</h3>
-              <p className="text-muted-foreground text-sm">
-                Profile: {result.profile}
-              </p>
-            </div>
-            
-            <div className="bg-white rounded-lg border p-6">
-              <h4 className="font-semibold mb-2">Strategy</h4>
-              <p className="text-muted-foreground">{result.strategy}</p>
-            </div>
-            
-            <div className="bg-white rounded-lg border p-6">
-              <h4 className="font-semibold mb-2">Authority</h4>
-              <p className="text-muted-foreground">{result.authority}</p>
-            </div>
+          <div className="bg-white rounded-lg border p-6">
+            <h4 className="font-semibold mb-2">전략</h4>
+            <p className="text-muted-foreground">{result.strategy}</p>
+          </div>
+          
+          <div className="bg-white rounded-lg border p-6">
+            <h4 className="font-semibold mb-2">결정 스타일</h4>
+            <p className="text-muted-foreground">{result.authority}</p>
           </div>
         </div>
 
@@ -141,8 +131,18 @@ export default function ResultPage() {
           profile={result.profile}
           descriptions={descriptions}
         />
+
+        <div className="mt-10 text-center">
+          <a
+            href="https://funnyfunny.cloud/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex w-full items-center justify-center gap-2 rounded-lg border px-8 py-5 text-lg font-semibold text-indigo-800 border-indigo-200 bg-white shadow-sm hover:bg-indigo-50 transition"
+          >
+            🎯 더 많은 테스트 해보기
+          </a>
+        </div>
       </div>
     </div>
   )
 }
-

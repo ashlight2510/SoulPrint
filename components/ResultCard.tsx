@@ -36,7 +36,7 @@ export function ResultCard({
       {/* Type */}
       <Card>
         <CardHeader>
-          <CardTitle>Type: {type}</CardTitle>
+          <CardTitle>유형: {type}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground leading-relaxed">
@@ -48,7 +48,7 @@ export function ResultCard({
       {/* Strategy */}
       <Card>
         <CardHeader>
-          <CardTitle>Strategy: {strategy}</CardTitle>
+          <CardTitle>전략: {strategy}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground leading-relaxed">
@@ -60,7 +60,7 @@ export function ResultCard({
       {/* Authority */}
       <Card>
         <CardHeader>
-          <CardTitle>Authority: {authority}</CardTitle>
+          <CardTitle>결정 스타일: {authority}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground leading-relaxed">
@@ -72,7 +72,7 @@ export function ResultCard({
       {/* Profile */}
       <Card>
         <CardHeader>
-          <CardTitle>Profile: {profile}</CardTitle>
+          <CardTitle>성향 조합: {profile}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground leading-relaxed">
@@ -83,4 +83,3 @@ export function ResultCard({
     </div>
   )
 }
-
