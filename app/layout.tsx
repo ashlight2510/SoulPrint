@@ -48,6 +48,7 @@ export default function RootLayout({
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1204894220949193" crossOrigin="anonymous"></script>
       </head>
       <body className={inter.className}>
+        {children}
       <div className="adsense-block" style={{ margin: '16px 0', textAlign: 'center' }}>
         <ins
           className="adsbygoogle"
@@ -62,7 +63,6 @@ export default function RootLayout({
         {`(adsbygoogle = window.adsbygoogle || []).push({});`}
       </Script>
 
-        {children}
         <footer className="border-t mt-12 py-6 px-4 text-center text-sm text-muted-foreground">
           <p className="mb-2">
             © 2025 — 이 서비스는 다양한 형이상학적 시스템에서 영감을 받은
