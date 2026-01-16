@@ -1,16 +1,19 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { Language } from "@/lib/translations"
 
 export function LangSwitch() {
   const router = useRouter()
-  const searchParams = useSearchParams()
   const [lang, setLang] = useState<Language>("ko")
 
   useEffect(() => {
-    const urlLang = searchParams.get("lang") as Language
+    // Client-side only: read from URL or localStorage
+    if (typeof window === "undefined") return
+    
+    const urlParams = new URLSearchParams(window.location.search)
+    const urlLang = urlParams.get("lang") as Language
     const storedLang = localStorage.getItem("preferredLang") as Language
     const browserLang = navigator.language?.startsWith("ko") ? "ko" : "en"
     
@@ -19,16 +22,19 @@ export function LangSwitch() {
       setLang(currentLang)
       localStorage.setItem("preferredLang", currentLang)
     }
-  }, [searchParams])
+  }, [])
 
   const handleLangChange = (newLang: Language) => {
     setLang(newLang)
     localStorage.setItem("preferredLang", newLang)
     
-    const params = new URLSearchParams(searchParams.toString())
-    params.set("lang", newLang)
-    router.push(`?${params.toString()}`)
-    router.refresh()
+    // Update URL without useSearchParams
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href)
+      url.searchParams.set("lang", newLang)
+      router.push(url.pathname + url.search)
+      router.refresh()
+    }
   }
 
   return (
