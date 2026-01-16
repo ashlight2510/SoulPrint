@@ -51,12 +51,8 @@ export function LangSwitch() {
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href)
       url.searchParams.set("lang", newLang)
-      // Use router.push with scroll: false to avoid scroll jump
-      router.push(url.pathname + url.search)
-      // Force a refresh to update all components
-      setTimeout(() => {
-        window.location.href = url.pathname + url.search
-      }, 100)
+      // Use window.location.href for immediate page reload
+      window.location.href = url.pathname + url.search
     }
   }
 

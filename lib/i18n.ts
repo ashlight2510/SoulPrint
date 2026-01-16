@@ -25,13 +25,13 @@ export function useLanguage(): Language {
     
     updateLang()
     
-    // Listen for URL changes
-    const checkInterval = setInterval(updateLang, 100)
+    // Listen for URL changes (popstate for back/forward, storage for cross-tab)
     window.addEventListener("popstate", updateLang)
+    window.addEventListener("storage", updateLang)
     
     return () => {
-      clearInterval(checkInterval)
       window.removeEventListener("popstate", updateLang)
+      window.removeEventListener("storage", updateLang)
     }
   }, [])
 
