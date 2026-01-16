@@ -1,4 +1,5 @@
 import { Type, Authority, Profile } from "./calculator";
+import { typeTranslations, strategyTranslations, authorityTranslations } from "./translations";
 
 /**
  * 독자적인 설명문 생성기
@@ -17,23 +18,27 @@ export function generateDescriptions(
   type: Type,
   strategy: string,
   authority: Authority,
-  profile: Profile
+  profile: Profile,
+  lang: "ko" | "en" = "ko"
 ): Descriptions {
   return {
-    overview: generateOverview(type, profile),
-    typeExplanation: generateTypeExplanation(type),
-    strategyExplanation: generateStrategyExplanation(strategy, type),
-    authorityExplanation: generateAuthorityExplanation(authority),
-    profileExplanation: generateProfileExplanation(profile),
+    overview: generateOverview(type, profile, lang),
+    typeExplanation: generateTypeExplanation(type, lang),
+    strategyExplanation: generateStrategyExplanation(strategy, type, lang),
+    authorityExplanation: generateAuthorityExplanation(authority, lang),
+    profileExplanation: generateProfileExplanation(profile, lang),
   };
 }
 
-function generateOverview(type: Type, profile: Profile): string {
+function generateOverview(type: Type, profile: Profile, lang: "ko" | "en" = "ko"): string {
+  if (lang === "en") {
+    return `Your personality analysis shows that you are a ${type} type with a profile combination of ${profile}. This analysis was calculated using an independent algorithm based on birth information and helps you understand your unique energy patterns and approach to life. By examining the meaning of each item, you can gain new insights about yourself.`;
+  }
   return `당신의 성향 분석 결과, ${type} 유형이며 성향 조합 ${profile}에 해당합니다. 이 분석은 출생 정보를 바탕으로 한 독자적인 알고리즘으로 계산되었으며, 당신의 고유한 에너지 패턴과 삶의 접근 방식을 이해하는 데 도움을 줍니다. 각 항목의 의미를 살펴보시면 자신에 대한 새로운 통찰을 얻으실 수 있습니다.`;
 }
 
-function generateTypeExplanation(type: Type): string {
-  const explanations: Record<Type, string> = {
+function generateTypeExplanation(type: Type, lang: "ko" | "en" = "ko"): string {
+  const explanationsKo: Record<Type, string> = {
     조율가:
       "조율가는 주변 환경과 사람들을 잘 읽고 흐름을 맞추는 데 강점이 있습니다. 에너지를 직접 생산하기보다, 맞는 자리에서 자신의 통찰을 나눌 때 빛납니다. 무리해서 앞장서기보다 나를 알아보는 상황과 사람을 기다렸다가 초대를 받으면 크게 활약할 수 있습니다.",
     
@@ -50,11 +55,28 @@ function generateTypeExplanation(type: Type): string {
       "관찰가는 주변 분위기와 사람들의 상태를 민감하게 느끼는 타입입니다. 서두르기보다 시간을 두고 지켜보며, 여러 관점을 모은 뒤 결정할 때 안전합니다. 환경이 잘 맞을수록 컨디션이 오르니, 편안한 장소와 사람을 고르는 것이 중요합니다.",
   };
   
-  return explanations[type];
+  const explanationsEn: Record<Type, string> = {
+    조율가:
+      "Harmonizers excel at reading their surroundings and people, and aligning with the flow. Rather than directly producing energy, they shine when sharing their insights in the right place. Instead of forcing themselves to lead, they can thrive greatly by waiting for situations and people who recognize them, then acting when invited.",
+    
+    반응가:
+      "Generators are a type with stable energy who respond to things and people coming from outside and feel satisfaction. Rather than forcing themselves to start, they wait for 'yes/no' to arise from within, and when they focus on what their body is drawn to, their energy lasts longer.",
+    
+    "멀티 실행가":
+      "Manifesting Generators are a type that combines the energy of Generators with the immediate propulsion of Manifestors. They enjoy doing multiple things quickly at the same time, and efficiency increases when they respond immediately to what fits and boldly let go of what doesn't. Maintain speed and flexibility, but always check your body's response.",
+    
+    시작가:
+      "Manifestors are a type with strong power to independently initiate and push forward work. It's natural to move first without worrying about others, but you can reduce unnecessary friction by informing those around you in advance. Your abilities are best revealed when you set your own pace alone.",
+    
+    관찰가:
+      "Projectors are a type that sensitively feels the atmosphere and state of people around them. Rather than rushing, it's safer to take time to observe and make decisions after gathering multiple perspectives. The better the environment fits, the better your condition improves, so it's important to choose comfortable places and people.",
+  };
+  
+  return lang === "en" ? explanationsEn[type] : explanationsKo[type];
 }
 
-function generateStrategyExplanation(strategy: string, type: Type): string {
-  const explanations: Record<string, string> = {
+function generateStrategyExplanation(strategy: string, type: Type, lang: "ko" | "en" = "ko"): string {
+  const explanationsKo: Record<string, string> = {
     "인정받을 때까지 기다리기":
       "당신의 전략은 '인정받을 때까지 기다리기'입니다. 능력을 발휘하려고 무리하게 나서기보다는, 자신의 고유한 재능을 알아보는 사람들과 환경을 기다리는 것이 중요합니다. 초대나 요청을 받았을 때 행동하는 것이 당신에게 가장 자연스럽고 효과적인 방식입니다. 강제로 기회를 만들려 하지 말고, 자신의 가치를 인정해주는 곳에서 활동하세요.",
     
@@ -71,11 +93,29 @@ function generateStrategyExplanation(strategy: string, type: Type): string {
       "당신의 전략은 '관찰하고 시간을 갖기'입니다. 결정을 내리기 전에 충분한 시간을 두고 다양한 관점을 고려하는 것이 중요합니다. 주변 환경과 사람들의 에너지를 반영하는 특성상, 성급하게 결정을 내리면 자신에게 맞지 않은 선택을 할 수 있습니다. 최소 한 달 정도의 주기를 통해 상황을 관찰하고, 자신에게 진정으로 맞는 것을 선택하세요.",
   };
   
-  return explanations[strategy] || "당신의 전략을 이해하고 실천하는 것이 중요합니다.";
+  const explanationsEn: Record<string, string> = {
+    "인정받을 때까지 기다리기":
+      "Your strategy is 'Wait for Recognition'. Rather than forcing yourself forward to demonstrate your abilities, it's important to wait for people and environments that recognize your unique talents. Acting when you receive invitations or requests is the most natural and effective way for you. Don't try to force opportunities, but rather work in places that recognize your value.",
+    
+    "다가오는 것에 반응하기":
+      "Your strategy is 'Respond to What Comes'. You naturally respond to various opportunities and situations in life, and trusting your internal response (satisfaction or dissatisfaction) is key. Rather than planning ahead or forcing yourself to start work, responding to what comes from around you and following the flow is most suitable for you. Listen well to your internal signals and act accordingly.",
+    
+    "반응한 뒤 재빠르게 행동하기":
+      "Your strategy is 'Respond and Act Quickly'. You can utilize both the responsiveness of Generators and the immediate action power of Manifestors. Your strength is quickly responding to what fits you and immediately acting accordingly. It's important to explore multiple opportunities simultaneously and focus on what's most satisfying. Value efficiency and speed, but don't ignore your internal response.",
+    
+    "알리고 시작하기":
+      "Your strategy is 'Inform and Initiate'. While you have the ability to independently start work, it's important to inform those around you of your intentions and plans. This reduces unnecessary resistance and allows things to proceed more smoothly. Don't try to do everything alone, but share information with those who need it and cooperate - that's the key to success.",
+    
+    "충분히 관찰하고 결정하기":
+      "Your strategy is 'Observe and Take Time'. It's important to take sufficient time and consider various perspectives before making decisions. Given your nature of reflecting the energy of your surroundings and people, making hasty decisions can lead to choices that don't fit you. Observe the situation through at least a month-long cycle and choose what truly fits you.",
+  };
+  
+  const explanations = lang === "en" ? explanationsEn : explanationsKo;
+  return explanations[strategy] || (lang === "en" ? "It's important to understand and practice your strategy." : "당신의 전략을 이해하고 실천하는 것이 중요합니다.");
 }
 
-function generateAuthorityExplanation(authority: Authority): string {
-  const explanations: Record<Authority, string> = {
+function generateAuthorityExplanation(authority: Authority, lang: "ko" | "en" = "ko"): string {
+  const explanationsKo: Record<Authority, string> = {
     "감정 흐름형":
       "감정의 물결을 한 번 흘려보낸 뒤 결정하는 타입입니다. 기분이 들뜨거나 가라앉을 때는 잠시 기다렸다가, 감정이 잔잔해졌을 때 선택하면 후회가 줄어듭니다. 바로 대답하기보다는 하루 정도 시간을 두고 마음이 편안해질 때 결정하세요.",
     
@@ -95,13 +135,33 @@ function generateAuthorityExplanation(authority: Authority): string {
       "시간을 두고 찬찬히 생각을 굴려 볼 때 가장 좋은 답을 찾는 타입입니다. 정보를 모으고, 여러 관점을 비교하며, 감정이 가라앉은 뒤에 결정하면 안정적입니다. 서두르기보다 거리감을 두고 바라볼 때 명확함이 생깁니다.",
   };
   
-  return explanations[authority];
+  const explanationsEn: Record<Authority, string> = {
+    "감정 흐름형":
+      "This is a type that makes decisions after letting the emotional wave pass once. When your mood is high or low, wait a moment, and when your emotions have calmed, make your choice to reduce regret. Rather than answering immediately, take about a day and decide when your mind is at ease.",
+    
+    "직감형":
+      "This is a type where the first feeling and the sudden flash of sensation are most trustworthy. Rather than thinking long with your head, following the instant 'this is it/not it' signal results in less regret. The more complex your thoughts become, the more your intuition fades, so don't miss the quick signals your body gives.",
+    
+    "의지 주도형":
+      "This is a type where the standard is whether you really want to do it, whether your heart is drawn to it. You gain strength when making choices that protect your desires and self-esteem rather than others' expectations. Ask yourself 'Do I really want this?' and move when your heart is clearly drawn.",
+    
+    "몸 반응형":
+      "This is a type where your body answers before your thoughts. If it fits, energy naturally arises, and if not, your body feels heavy. Observe feelings like 'Are your shoulders straightening, is energy draining?' The choice that your body responds to lightly fits best.",
+    
+    "말하면서 명료해지는 형":
+      "This is a type where the answer becomes clear when you speak your inner thoughts out loud. Whether it's talking to yourself or confiding in someone you trust, choose the direction where your mind brightens as you speak. The moment you say it out loud, you hear the direction you truly want.",
+    
+    "사색형":
+      "This is a type that finds the best answer when you take time to carefully think things through. It's stable when you gather information, compare various perspectives, and decide after your emotions have settled. Clarity comes when you observe from a distance rather than rushing.",
+  };
+  
+  return lang === "en" ? explanationsEn[authority] : explanationsKo[authority];
 }
 
-function generateProfileExplanation(profile: Profile): string {
+function generateProfileExplanation(profile: Profile, lang: "ko" | "en" = "ko"): string {
   const [line1, line2] = profile.split("/").map(Number);
   
-  const lineDescriptions: Record<number, string> = {
+  const lineDescriptionsKo: Record<number, string> = {
     1: "연구자: 깊이 있는 탐구와 근본적인 이해를 추구합니다.", 
     2: "은둔자: 고유한 재능을 가지고 있으나 때를 기다립니다.",
     3: "순환자: 시행착오를 통해 배우고 성장합니다.",
@@ -109,6 +169,21 @@ function generateProfileExplanation(profile: Profile): string {
     5: "일반화자: 보편적 해결책을 찾아 다른 사람들을 돕습니다.",
     6: "모범자: 이상을 추구하며 다른 사람들의 롤모델이 됩니다.",
   };
+  
+  const lineDescriptionsEn: Record<number, string> = {
+    1: "Investigator: Pursues deep exploration and fundamental understanding.", 
+    2: "Hermit: Has unique talents but waits for the right time.",
+    3: "Martyr: Learns and grows through trial and error.",
+    4: "Opportunist: Creates opportunities through networks and connections.",
+    5: "Heretic: Finds universal solutions and helps others.",
+    6: "Role Model: Pursues ideals and becomes a role model for others.",
+  };
+  
+  const lineDescriptions = lang === "en" ? lineDescriptionsEn : lineDescriptionsKo;
+  
+  if (lang === "en") {
+    return `Profile Combination ${profile}: The first number ${line1} represents your conscious characteristics, and the second number ${line2} represents your unconscious characteristics. ${lineDescriptions[line1]} At the same time, ${lineDescriptions[line2]} These two characteristics harmonize to create your unique way of life. It's important to understand the characteristics of each line and develop them in balance.`;
+  }
   
   return `성향 조합 ${profile}: 첫 번째 숫자 ${line1}은 당신의 의식적 특성을, 두 번째 숫자 ${line2}는 무의식적 특성을 나타냅니다. ${lineDescriptions[line1]} 동시에 ${lineDescriptions[line2]} 이 두 가지 특성이 조화를 이루며 당신의 고유한 삶의 방식을 만들어냅니다. 각 라인의 특성을 이해하고 균형 있게 발전시키는 것이 중요합니다.`;
 }

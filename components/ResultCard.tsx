@@ -3,6 +3,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Type, Authority, Profile } from "@/lib/calculator"
 import { Descriptions } from "@/lib/descriptions"
+import { useTranslation } from "@/lib/i18n"
+import { typeTranslations, strategyTranslations, authorityTranslations } from "@/lib/translations"
 
 interface ResultCardProps {
   type: Type
@@ -19,12 +21,20 @@ export function ResultCard({
   profile,
   descriptions,
 }: ResultCardProps) {
+  const t = useTranslation()
+  const lang = typeof window !== "undefined" ? (localStorage.getItem("preferredLang") || "ko") : "ko"
+  const isEn = lang === "en"
+  
+  const typeDisplay = isEn && typeTranslations[type] ? typeTranslations[type].en : type
+  const strategyDisplay = isEn && strategyTranslations[strategy] ? strategyTranslations[strategy].en : strategy
+  const authorityDisplay = isEn && authorityTranslations[authority] ? authorityTranslations[authority].en : authority
+  
   return (
     <div className="space-y-6">
       {/* Overview */}
       <Card>
         <CardHeader>
-          <CardTitle>분석 결과 요약</CardTitle>
+          <CardTitle>{t("overviewTitle")}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground leading-relaxed">
@@ -36,7 +46,7 @@ export function ResultCard({
       {/* Type */}
       <Card>
         <CardHeader>
-          <CardTitle>유형: {type}</CardTitle>
+          <CardTitle>{t("typeTitle")}: {typeDisplay}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground leading-relaxed">
@@ -48,7 +58,7 @@ export function ResultCard({
       {/* Strategy */}
       <Card>
         <CardHeader>
-          <CardTitle>전략: {strategy}</CardTitle>
+          <CardTitle>{t("strategyTitle")}: {strategyDisplay}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground leading-relaxed">
@@ -60,7 +70,7 @@ export function ResultCard({
       {/* Authority */}
       <Card>
         <CardHeader>
-          <CardTitle>결정 스타일: {authority}</CardTitle>
+          <CardTitle>{t("authorityTitle")}: {authorityDisplay}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground leading-relaxed">
@@ -72,7 +82,7 @@ export function ResultCard({
       {/* Profile */}
       <Card>
         <CardHeader>
-          <CardTitle>성향 조합: {profile}</CardTitle>
+          <CardTitle>{t("profileTitle")}: {profile}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground leading-relaxed">
