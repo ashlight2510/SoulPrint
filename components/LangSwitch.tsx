@@ -1,11 +1,12 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import { Language } from "@/lib/translations"
 
 export function LangSwitch() {
   const router = useRouter()
+  const pathname = usePathname()
   const [lang, setLang] = useState<Language>("ko")
 
   useEffect(() => {
@@ -24,16 +25,38 @@ export function LangSwitch() {
     }
   }, [])
 
+  // Listen for URL changes
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    
+    const checkLang = () => {
+      const urlParams = new URLSearchParams(window.location.search)
+      const urlLang = urlParams.get("lang") as Language
+      if (urlLang === "ko" || urlLang === "en") {
+        setLang(urlLang)
+        localStorage.setItem("preferredLang", urlLang)
+      }
+    }
+    
+    checkLang()
+    window.addEventListener("popstate", checkLang)
+    return () => window.removeEventListener("popstate", checkLang)
+  }, [])
+
   const handleLangChange = (newLang: Language) => {
     setLang(newLang)
     localStorage.setItem("preferredLang", newLang)
     
-    // Update URL without useSearchParams
+    // Update URL and trigger page refresh
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href)
       url.searchParams.set("lang", newLang)
+      // Use router.push with scroll: false to avoid scroll jump
       router.push(url.pathname + url.search)
-      router.refresh()
+      // Force a refresh to update all components
+      setTimeout(() => {
+        window.location.href = url.pathname + url.search
+      }, 100)
     }
   }
 
