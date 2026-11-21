@@ -24,6 +24,12 @@ const config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        /* FunnyFunny Candy Ticket Booth tokens */
+        ink: { DEFAULT: "#0e2230", 2: "#17384a", 3: "#0a1a26" },
+        paper: { DEFAULT: "#fff6de", 2: "#fffdf6" },
+        coral: "#ff4b33",
+        sun: "#ffb81c",
+        mint: "#16b892",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -53,6 +59,16 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      fontFamily: {
+        display: ["var(--font-display)", "var(--font-jua)", "var(--font-body)", "sans-serif"],
+        booth: ["var(--font-jua)", "var(--font-body)", "sans-serif"],
+        body: ["var(--font-outfit)", "var(--font-body)", "sans-serif"],
+      },
+      boxShadow: {
+        /* ONE hard offset shadow — the only shadow in the booth */
+        hard: "8px 8px 0 0 #0e2230",
+        none: "none",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -78,4 +94,3 @@ const config = {
 } satisfies Config
 
 export default config
-

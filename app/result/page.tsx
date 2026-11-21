@@ -73,16 +73,16 @@ function ResultContent() {
 
   if (!result || !descriptions) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-paper">
         <div className="text-center">
-          <p className="text-muted-foreground">{t("resultCalculating")}</p>
+          <p className="font-booth text-ink">{t("resultCalculating")}</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+    <div className="min-h-screen bg-paper">
       <LangSwitch />
       <div className="container mx-auto px-4 py-12 max-w-4xl">
         <div className="mb-6 flex items-center justify-between">
@@ -109,45 +109,55 @@ function ResultContent() {
         </div>
 
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          <span className="booth-badge booth-badge--mint mb-4">YOUR SOUL TICKET</span>
+          <h1 className="font-display text-5xl leading-tight text-ink sm:text-6xl">
             {t("resultTitle")}
           </h1>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-white rounded-lg border p-6">
-            <h3 className="text-2xl font-bold mb-2">
+        <div className="grid md:grid-cols-3 gap-6 mb-8">
+          <div className="ticket overflow-hidden">
+            <div className="h-3 bg-coral" aria-hidden="true" />
+            <div className="p-6">
+            <h3 className="font-display text-3xl mb-2 text-ink">
               {(() => {
                 const lang = searchParams.get("lang") || localStorage.getItem("preferredLang") || "ko"
                 const isEn = lang === "en"
                 return isEn && typeTranslations[result.type] ? typeTranslations[result.type].en : result.type
               })()}
             </h3>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-ink-soft text-sm">
               {t("profileLabel")}: {result.profile}
             </p>
+            </div>
           </div>
-          
-          <div className="bg-white rounded-lg border p-6">
-            <h4 className="font-semibold mb-2">{t("strategyLabel")}</h4>
-            <p className="text-muted-foreground">
+
+          <div className="ticket overflow-hidden">
+            <div className="h-3 bg-sun" aria-hidden="true" />
+            <div className="p-6">
+            <h4 className="font-booth text-lg mb-2 text-ink">{t("strategyLabel")}</h4>
+            <p className="text-ink-soft">
               {(() => {
                 const lang = searchParams.get("lang") || localStorage.getItem("preferredLang") || "ko"
                 const isEn = lang === "en"
                 return isEn && strategyTranslations[result.strategy] ? strategyTranslations[result.strategy].en : result.strategy
               })()}
             </p>
+            </div>
           </div>
-          
-          <div className="bg-white rounded-lg border p-6">
-            <h4 className="font-semibold mb-2">{t("authorityLabel")}</h4>
-            <p className="text-muted-foreground">
+
+          <div className="ticket overflow-hidden">
+            <div className="h-3 bg-mint" aria-hidden="true" />
+            <div className="p-6">
+            <h4 className="font-booth text-lg mb-2 text-ink">{t("authorityLabel")}</h4>
+            <p className="text-ink-soft">
               {(() => {
                 const lang = searchParams.get("lang") || localStorage.getItem("preferredLang") || "ko"
                 const isEn = lang === "en"
                 return isEn && authorityTranslations[result.authority] ? authorityTranslations[result.authority].en : result.authority
               })()}
             </p>
+            </div>
           </div>
         </div>
 
@@ -164,7 +174,7 @@ function ResultContent() {
             href="https://funnyfunny.cloud/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex w-full items-center justify-center gap-2 rounded-lg border px-8 py-5 text-lg font-semibold text-indigo-800 border-indigo-200 bg-white shadow-sm hover:bg-indigo-50 transition"
+            className="flex w-full items-center justify-center gap-2 rounded-lg border-[2.5px] border-ink bg-coral px-8 py-5 font-booth text-lg text-paper-2 shadow-hard transition-transform hover:-translate-y-0.5 hover:bg-sun hover:text-ink"
           >
             {t("moreTestsButton")}
           </a>
@@ -178,8 +188,8 @@ export default function ResultPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center">
-          <p className="text-muted-foreground">
+        <div className="min-h-screen flex items-center justify-center bg-paper">
+          <p className="font-booth text-ink">
             {typeof window !== "undefined" && localStorage.getItem("preferredLang") === "en" 
               ? "Loading results..." 
               : "결과를 불러오는 중..."}

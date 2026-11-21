@@ -32,60 +32,65 @@ export function ResultCard({
   return (
     <div className="space-y-6">
       {/* Overview */}
-      <Card>
+      <Card className="overflow-hidden">
+        <div className="h-3 bg-sun" aria-hidden="true" />
         <CardHeader>
           <CardTitle>{t("overviewTitle")}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground leading-relaxed">
+          <p className="font-body-kr text-ink-soft leading-relaxed">
             {descriptions.overview}
           </p>
         </CardContent>
       </Card>
 
       {/* Type */}
-      <Card>
+      <Card className="overflow-hidden">
+        <div className="h-3 bg-coral" aria-hidden="true" />
         <CardHeader>
           <CardTitle>{t("typeTitle")}: {typeDisplay}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground leading-relaxed">
+          <p className="font-body-kr text-ink-soft leading-relaxed">
             {descriptions.typeExplanation}
           </p>
         </CardContent>
       </Card>
 
       {/* Strategy */}
-      <Card>
+      <Card className="overflow-hidden">
+        <div className="h-3 bg-mint" aria-hidden="true" />
         <CardHeader>
           <CardTitle>{t("strategyTitle")}: {strategyDisplay}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground leading-relaxed">
+          <p className="font-body-kr text-ink-soft leading-relaxed">
             {descriptions.strategyExplanation}
           </p>
         </CardContent>
       </Card>
 
       {/* Authority */}
-      <Card>
+      <Card className="overflow-hidden">
+        <div className="h-3 bg-sun" aria-hidden="true" />
         <CardHeader>
           <CardTitle>{t("authorityTitle")}: {authorityDisplay}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground leading-relaxed">
+          <p className="font-body-kr text-ink-soft leading-relaxed">
             {descriptions.authorityExplanation}
           </p>
         </CardContent>
       </Card>
 
       {/* Profile */}
-      <Card>
+      <Card className="overflow-hidden">
+        <div className="h-3 bg-coral" aria-hidden="true" />
         <CardHeader>
           <CardTitle>{t("profileTitle")}: {profile}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground leading-relaxed">
+          <p className="font-body-kr text-ink-soft leading-relaxed">
             {descriptions.profileExplanation}
           </p>
         </CardContent>

@@ -38,7 +38,7 @@ export function DateInput({
         required
       />
       {hint ? (
-        <p className="text-xs text-muted-foreground">{hint}</p>
+        <p className="font-body-kr text-xs text-ink-soft">{hint}</p>
       ) : null}
     </div>
   )

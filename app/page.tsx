@@ -67,26 +67,29 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+    <div className="min-h-screen bg-paper">
       <LangSwitch />
       <div className="container mx-auto px-4 py-12 max-w-2xl">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          <span className="booth-badge mb-4">🎟️ CANDY TICKET BOOTH</span>
+          <h1 className="font-display text-5xl leading-tight mb-3 text-ink sm:text-6xl">
             {t("title")}
           </h1>
-          <p className="text-muted-foreground">
+          <p className="font-body-kr text-lg text-ink-soft">
             {t("subtitle")}
           </p>
         </div>
 
-        <Card>
+        <Card className="overflow-hidden">
+          <div className="awning" aria-hidden="true" />
           <CardHeader>
             <CardTitle>{t("cardTitle")}</CardTitle>
-            <CardDescription>
+            <CardDescription className="text-ink-soft">
               {t("cardDescription")}
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <div className="ticket-perforation mx-6" aria-hidden="true" />
+          <CardContent className="pt-6">
             <form onSubmit={handleSubmit} className="space-y-6">
               <DateInput
                 label={t("birthDateLabel")}
@@ -113,9 +116,19 @@ export default function Home() {
           </CardContent>
         </Card>
 
-        <div className="mt-8 text-center text-sm text-muted-foreground">
+        <div className="mt-8 text-center text-sm text-ink-soft">
           <p>
             {t("serviceNote")}
+          </p>
+          <p className="mt-4">
+            <a
+              href="https://funnyfunny.cloud/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-booth text-coral underline decoration-sun decoration-[3px] underline-offset-4 hover:text-mint"
+            >
+              FunnyFunny에서 더 많은 테스트 보기 →
+            </a>
           </p>
         </div>
       </div>

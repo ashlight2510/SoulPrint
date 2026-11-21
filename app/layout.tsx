@@ -1,9 +1,34 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Black_Han_Sans, Jua, Gowun_Dodum, Outfit } from "next/font/google"
 import "./globals.css"
 import Script from 'next/script'
 
-const inter = Inter({ subsets: ["latin"] })
+const display = Black_Han_Sans({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-display",
+  display: "swap",
+})
+
+const jua = Jua({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-jua",
+  display: "swap",
+})
+
+const bodyKr = Gowun_Dodum({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-body",
+  display: "swap",
+})
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   title: "SoulPrint - 성향 분석 도구",
@@ -18,7 +43,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://dummyimage.com/1200x630/1f2937/f9fafb&text=Soul+Print",
+        url: "https://dummyimage.com/1200x630/0e2230/fff6de&text=Soul+Print",
         width: 1200,
         height: 630,
         alt: "SoulPrint 성향 분석 대표 이미지",
@@ -29,7 +54,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "SoulPrint - 성향 분석 도구",
     description: "출생 정보를 바탕으로 한 독자적인 성향 분석 서비스",
-    images: ["https://dummyimage.com/1200x630/1f2937/f9fafb&text=Soul+Print"],
+    images: ["https://dummyimage.com/1200x630/0e2230/fff6de&text=Soul+Print"],
   },
   robots: {
     index: true,
@@ -47,7 +72,11 @@ export default function RootLayout({
       <head>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1204894220949193" crossOrigin="anonymous"></script>
       </head>
-      <body className={inter.className}>
+      <body
+        className={`${display.variable} ${jua.variable} ${bodyKr.variable} ${outfit.variable} font-body antialiased`}
+      >
+        {/* Candy ticket-booth awning */}
+        <div className="awning" aria-hidden="true" />
         {children}
       <div
         className="adsense-block"
@@ -66,17 +95,28 @@ export default function RootLayout({
         {`(adsbygoogle = window.adsbygoogle || []).push({});`}
       </Script>
 
-        <footer className="border-t mt-12 py-6 px-4 text-center text-sm text-muted-foreground">
-          <p className="mb-2">
+        <footer className="mt-12 border-t-[3px] border-ink bg-ink px-4 py-8 text-center text-sm text-paper">
+          <p className="font-booth text-base text-sun">SoulPrint · Candy Ticket Booth</p>
+          <p className="mb-2 mt-3">
             © 2025 — 이 서비스는 다양한 형이상학적 시스템에서 영감을 받은
             독립적인 성향 분석 도구이며, Human Design®, Jovian Archive 등
             어떠한 공식 기관과도 관련이 없습니다.
           </p>
-          <p className="text-xs mt-2">
+          <p className="text-xs mt-2 text-paper/70">
             본 서비스는 Human Design System의 개념을 참고하여
             독자적으로 재구성된 성향 분석 도구입니다.
             공식 기관(Jovian Archive 등)과 무관하며,
             공식 문구나 자료를 사용하지 않습니다.
+          </p>
+          <p className="mt-4 text-xs">
+            <a
+              href="https://funnyfunny.cloud/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-booth text-mint underline decoration-sun decoration-2 underline-offset-4 hover:text-sun"
+            >
+              FunnyFunny — 더 많은 테스트 보러 가기 →
+            </a>
           </p>
         </footer>
       </body>

@@ -57,23 +57,23 @@ export function LangSwitch() {
   }
 
   return (
-    <div className="fixed top-4 right-4 z-50 inline-flex gap-1 p-1 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 shadow-lg">
+    <div className="fixed top-12 right-4 z-50 inline-flex gap-1 p-1 rounded-full bg-paper-2 border-[2.5px] border-ink">
       <button
         onClick={() => handleLangChange("ko")}
-        className={`px-3 py-1.5 rounded-full text-sm font-semibold transition-all ${
+        className={`px-3 py-1.5 rounded-full font-booth text-sm transition-colors ${
           lang === "ko"
-            ? "bg-indigo-600 text-white shadow-sm"
-            : "text-gray-700 hover:bg-gray-100"
+            ? "bg-coral text-paper-2"
+            : "text-ink hover:bg-sun"
         }`}
       >
         KR
       </button>
       <button
         onClick={() => handleLangChange("en")}
-        className={`px-3 py-1.5 rounded-full text-sm font-semibold transition-all ${
+        className={`px-3 py-1.5 rounded-full font-booth text-sm transition-colors ${
           lang === "en"
-            ? "bg-indigo-600 text-white shadow-sm"
-            : "text-gray-700 hover:bg-gray-100"
+            ? "bg-coral text-paper-2"
+            : "text-ink hover:bg-sun"
         }`}
       >
         EN

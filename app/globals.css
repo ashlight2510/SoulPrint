@@ -2,59 +2,180 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  FunnyFunny Candy Ticket Booth — design tokens
+  ink   #0e2230 / #17384a / #0a1a26
+  paper #fff6de / #fffdf6
+  coral #ff4b33 · sun #ffb81c · mint #16b892
+  One hard offset shadow only. No blur shadows, no purple SaaS.
+*/
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
+    /* raw tokens (hex, for gradients / awning / shadow) */
+    --ink: #0e2230;
+    --ink-2: #17384a;
+    --ink-3: #0a1a26;
+    --paper: #fff6de;
+    --paper-2: #fffdf6;
+    --coral: #ff4b33;
+    --sun: #ffb81c;
+    --mint: #16b892;
+
+    /* shadcn tokens mapped to booth palette (HSL channels) */
+    --background: 44 100% 93.5%; /* #fff6de */
+    --foreground: 204 55% 12%; /* #0e2230 */
+    --card: 40 100% 98%; /* #fffdf6 */
+    --card-foreground: 204 55% 12%;
+    --popover: 40 100% 98%;
+    --popover-foreground: 204 55% 12%;
+    --primary: 7 100% 60%; /* #ff4b33 coral */
+    --primary-foreground: 40 100% 98%;
+    --secondary: 41 100% 55%; /* #ffb81c sun */
+    --secondary-foreground: 204 55% 12%;
+    --muted: 44 72% 88%;
+    --muted-foreground: 204 38% 28%; /* ink-2 softened for copy */
+    --accent: 165 79% 40%; /* #16b892 mint */
+    --accent-foreground: 40 100% 98%;
+    --destructive: 7 100% 60%;
+    --destructive-foreground: 40 100% 98%;
+    --border: 204 55% 12%; /* ink — hard ticket outlines */
+    --input: 204 55% 12%;
+    --ring: 165 79% 40%; /* mint focus */
+    --radius: 0.9rem;
+
+    /* THE one shadow used everywhere */
+    --shadow-hard: 8px 8px 0 0 var(--ink);
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 94.9%;
-  }
-}
-
-@layer base {
   * {
     @apply border-border;
   }
+
+  html {
+    background: var(--paper);
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-outfit), var(--font-body), "Gowun Dodum", sans-serif;
+    background-color: var(--paper);
+    /* faint ticket-paper dots, kept flat (no gradients-as-depth, no blur) */
+    background-image: radial-gradient(var(--sun) 1px, transparent 1.4px);
+    background-size: 26px 26px;
+  }
+
+  h1,
+  h2 {
+    font-family: var(--font-display), var(--font-jua), var(--font-body), sans-serif;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  h3,
+  h4 {
+    font-family: var(--font-jua), var(--font-body), sans-serif;
+    color: var(--ink);
+  }
+
+  ::selection {
+    background: var(--sun);
+    color: var(--ink);
   }
 }
 
+@layer components {
+  /* Striped candy awning — coral / paper stripes under an ink rule */
+  .awning {
+    height: 34px;
+    border-bottom: 3px solid var(--ink);
+    background-image: repeating-linear-gradient(
+      90deg,
+      var(--coral) 0 30px,
+      var(--paper-2) 30px 60px,
+      var(--sun) 60px 90px,
+      var(--paper-2) 90px 120px,
+      var(--mint) 120px 150px,
+      var(--paper-2) 150px 180px
+    );
+  }
+
+  /* Scalloped booth valance under the awning */
+  .awning-scallop {
+    height: 14px;
+    background-image: radial-gradient(
+      circle at 15px -4px,
+      transparent 16px,
+      var(--ink-2) 17px
+    );
+    background-size: 30px 14px;
+    background-repeat: repeat-x;
+    opacity: 0.14;
+  }
+
+  /* Ticket surface: paper card, ink outline, the one hard shadow */
+  .ticket {
+    background: var(--paper-2);
+    border: 2.5px solid var(--ink);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-hard);
+  }
+
+  /* Perforated ticket edge */
+  .ticket-perforation {
+    background-image: linear-gradient(
+      90deg,
+      var(--ink) 45%,
+      transparent 45%
+    );
+    background-size: 14px 2.5px;
+    background-repeat: repeat-x;
+    height: 2.5px;
+    opacity: 0.55;
+  }
+
+  /* Small booth badge / stamp */
+  .booth-badge {
+    font-family: var(--font-jua), var(--font-body), sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    padding: 0.3rem 0.85rem;
+    font-size: 0.8rem;
+    line-height: 1;
+    color: var(--ink);
+    background: var(--sun);
+  }
+
+  .booth-badge--mint {
+    background: var(--mint);
+    color: var(--paper-2);
+  }
+
+  .booth-badge--coral {
+    background: var(--coral);
+    color: var(--paper-2);
+  }
+}
+
+@layer utilities {
+  .shadow-hard {
+    box-shadow: var(--shadow-hard);
+  }
+  .font-display {
+    font-family: var(--font-display), var(--font-jua), var(--font-body), sans-serif;
+  }
+  .font-booth {
+    font-family: var(--font-jua), var(--font-body), sans-serif;
+  }
+  .font-body-kr {
+    font-family: var(--font-body), var(--font-outfit), sans-serif;
+  }
+  .text-ink-soft {
+    color: var(--ink-2);
+  }
+  .bg-ink-deep {
+    background-color: var(--ink-3);
+  }
+}
